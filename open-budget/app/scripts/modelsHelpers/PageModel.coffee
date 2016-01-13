@@ -1,4 +1,5 @@
-define ['backbone',
+define [
+        'backbone',
         'underscore',
         'scripts/modelsHelpers/BudgetItemKids',
         'scripts/modelsHelpers/SupportFieldNormalizer',
@@ -33,16 +34,11 @@ define ['backbone',
           #baseURL: "http://127.0.0.1:8080"
           selection: [ 0, 0 ]
           currentItem: null
-          dataType: "json"#p"
           ready: false
           kinds: []
           flow: null
-          local: true
 
       initialize: ->
-          if window.location.origin == @get('baseURL')
-              @set('local', false)
-              @set('dataType','json')
 
           @api = {
               BudgetItemKids: BudgetItemKids
@@ -52,9 +48,6 @@ define ['backbone',
           @supportFieldNormalizer = new SupportFieldNormalizer([], pageModel: @)
           @mainPageTabs           = new window.MainPageTabs(@)
           @resizeNotifier         = new ResizeNotifier()
-
-          @URLSchemeHandlerInstance = new window.URLSchemeHandler(@)
-          window.URLSchemeHandlerInstance = @URLSchemeHandlerInstance
 
           @resizeNotifier.registerResizeCallback( =>
             @.trigger('resized')

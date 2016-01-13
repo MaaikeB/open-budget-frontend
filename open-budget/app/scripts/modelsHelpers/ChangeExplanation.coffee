@@ -1,4 +1,7 @@
-define ['backbone', 'main_page_tabs', 'url_scheme'], (Backbone) ->
+define [
+    'backbone',
+    'scripts/appConfig'
+  ], (Backbone, appConfig) ->
   class ChangeExplanation extends Backbone.Model
 
       defaults:
@@ -21,8 +24,8 @@ define ['backbone', 'main_page_tabs', 'url_scheme'], (Backbone) ->
               ret
 
       doFetch: ->
-              @fetch(dataType: window.pageModel.get('dataType'))
+              @fetch(dataType: appConfig.dataType)
 
-      url: () => "#{window.pageModel.get('baseURL')}/api/change_expl/#{@requestId()}/#{@get('year')}"
+      url: () => "#{appConfig.baseURL}/api/change_expl/#{@requestId()}/#{@get('year')}"
 
   return ChangeExplanation;

@@ -239,9 +239,5 @@ define(['jquery', 'underscore', 'backbone', 'models'] , ($, _, Backbone, models)
                                 lastPoint.set('width', yearEnd - timestamp)
                                 lastPoint.set('last', true)
 
-    if models.pageModel.get('budgetCode')?
-        combinedHistory = new CombinedHistory([], pageModel: models.pageModel)
-        window.combinedHistory = combinedHistory
-
-    return combinedHistory || CombinedHistory
+    CombinedHistory
 )

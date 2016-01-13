@@ -451,9 +451,5 @@ define(
             #@chart.start()
             @rendered = true
 
-    console.log "main_page"
-
-    mainPageVis = new MainPageVis({el: $("#main-page-article"), model: models.pageModel });
-    window.mainPageVis = mainPageVis
-    return mainPageVis
+    MainPageVis
 )

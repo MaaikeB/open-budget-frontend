@@ -1,12 +1,21 @@
 define([
-  'backbone', 'models', 'bloodhound',
+  'backbone',
+  'models',
+  'bloodhound',
   'templates/searchbar-tooltip.html',
   'templates/expandor_icon.html',
   'templates/upbacker.html',
   'templates/searchbar-tooltip-full.html',
   'templates/search-dropdown-item.html',
-  'underscore'
-  ], (Backbone, models, Bloodhound, template_searchbar_tooltip, template_expandor_icon, template_upbacker, template_searchbar_tooltip_full, template_search_dropdown_item, _) ->
+  'underscore',
+  'scripts/appConfig',
+  'd3',
+  'd3-tip'
+  ], (Backbone, models, Bloodhound, template_searchbar_tooltip, template_expandor_icon, template_upbacker, template_searchbar_tooltip_full, template_search_dropdown_item, _, appConfig, d3, d3tip) ->
+
+    # When loading the scripts as AMD modules d3-tip does not assigns itself
+    # to d3.tip
+    d3.tip = d3tip
 
     class BudgetPartitionLayoutView extends Backbone.View
 
@@ -130,8 +139,8 @@ define([
                     @updateChart()
 
             $.ajax(
-                dataType: models.pageModel.get('dataType')
-                url: "#{models.pageModel.get('baseURL')}/api/sysprop/static-budget"
+                dataType: appConfig.dataType
+                url: "#{appConfig.baseURL}/api/sysprop/static-budget"
                 success: onSuccess
             )
 
@@ -453,14 +462,14 @@ define([
                 @partition.selectCode( @suggestions[selected].code )
 
         url: (query,limit) ->
-            "#{models.pageModel.get('baseURL')}/api/search/full_text?q=#{query}&limit=#{limit}"
+            "#{appConfig.baseURL}/api/search/full_text?q=#{query}&limit=#{limit}"
 
         initialize: () ->
             @state = STATE_IDLE
             @suggestionNum = 0
             @suggestions = []
             url = @url("%QUERY",100)
-            dataType = models.pageModel.get('dataType')
+            dataType = appConfig.dataType
             @engine = new Bloodhound
                             name: 'budgets'
                             prefetch:
